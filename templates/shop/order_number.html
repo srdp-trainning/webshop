@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}下单{% endblock %}
+
+{% block content %}
+    {{ user.person.name }}的余额还有{{ user.fund }}<br>
+    商品{{ good.name }}<br>
+    价格{{ good.price }}<br>
+    <form action="{% url 'shop:good_purchase' good.fake_id %}" method="post">
+    {% csrf_token %}
+        {% for temp in form %}
+    {{ temp.label }}{{ temp }}{{ temp.errors.0 }}
+    {% endfor %}
+    <input type="submit" value="购买">
+    </form>
+    <a href="{% url 'home'%}">返回主页</a>
+    <a href="{% url 'shop:good_display' %}">返回商城</a>
+{% endblock %}

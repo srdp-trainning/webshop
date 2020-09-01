@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}商城{% endblock %}
+
+{% block content %}
+------------------------------------------------------------------------<br>
+    {% for good in goods %}
+    <a href="{{ good.get_absolute_url }}">{{ good.name }}</a><br>
+    标签:{{ good.tags }}价格:{{ good.price }}
+        {% if good.view %}
+        主略览图<img src="{{ good.view.url }}" height="100" width="100"><br>
+        {% else %}
+            无略览图<br>
+        {% endif %}
+------------------------------------------------------------------------<br>
+    {% endfor %}
+    {% include 'paginator.html' %}
+<a href="{% url 'home' %}">返回主页</a>
+{% endblock %}

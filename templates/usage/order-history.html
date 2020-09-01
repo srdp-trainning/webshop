@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block title %}历史订单详情{% endblock %}
+
+{% block content %}
+{% for order in orders %}
+    时间:{{ order.date|date:"F j,Y" }}<br>
+    客户:{{ order.sender }}<br>
+    商品:{{ order.good.name }}<br>
+    标签:{{ order.good.tags }}<br>
+    购买个数:{{ order.number }}<br>
+---------------------------------------------------------------<br>
+    {% endfor %}
+    <a href="{% url 'home' %}">返回主页</a>
+{% include 'paginator.html' %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static "tinymce/js/tinymce/tinymce.min.js" %}"></script>
+    <script> tinyMCE.init({
+    selector: 'textarea',
+    theme: "modern",
+    plugins: "spellchecker,directionality,paste,image,code",
+    file_browser_callback_types: 'image',
+    file_picker_callback: function(callback, value, meta) {
+        if (meta.filetype === 'image') {
+            var fileUploadControl = document.getElementById("imageFileUpload");
+            fileUploadControl.click();
+            fileUploadControl.onchange = function () {
+                if (fileUploadControl.files.length > 0) {
+                    var localFile = fileUploadControl.files[0];
+                    if (/.(gif|jpg|jpeg|png|bmp)$/.test(localFile.name)){
+                        var formData = new FormData();
+                        formData.append("image", localFile);
+                        $.ajax({
+                            url: '{% url 'usage:upload_img' %}',
+                            type: 'POST',
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                callback(data, {alt: localFile.name});
+                            },
+                            error:function () {
+                                alert('图片上传失败')
+                            }
+                        });
+                    }
+                    else {
+                        alert('只能上传图片')
+                    }
+                } else {
+                    alert('请选择图片上传')
+                }
+            }
+        }
+    },
+    convert_urls :false,
+    language: "zh_CN",
+    image_advtab: true,
+    paste_data_images:true
+});
+    </script>
+</head>
+<body>
+<input type="file" id="imageFileUpload" style="display: none">
+{% block content %}
+<form method="post" action="{% url 'usage:new' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for temp in form %}
+
+        {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+    {% endfor %}
+详细商品信息<br>
+    <label><textarea name='content'></textarea></label>
+<br>
+<input type="submit" value="提交上架" name="on_sale">
+<input type="submit" value="暂存" name="save">
+</form>
+{% endblock %}
+<a href="{% url 'usage:list'%}">我的店铺</a>
+
+</body>
+</html>

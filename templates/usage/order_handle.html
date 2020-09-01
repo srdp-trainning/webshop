@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}订单{% endblock %}
+
+{% block content %}
+<h1>未处理的账单</h1>
+    <form action="{% url 'usage:my_order' %}" method="post">
+    {% csrf_token %}
+        {% for temp in order %}
+        <label><input type="checkbox" value="{{ temp.id }}" name="order_list"></label>
+        商品:{{ temp.good.name }}<br>
+        价格:{{ temp.good.price }}件数:{{ temp.number }}<br>
+        订货人:{{ temp.sender.person.name }}<br>
+        <a href="{{ temp.get_order_url }}">详情</a><br>
+    {% endfor %}
+    {% if order %}
+        <input type="submit" value="修改">
+    {% else %}
+    <p>还没有订单呢</p>
+    {% endif %}
+    </form>
+    {{ message }}
+    <a href="{% url 'home' %}">返回主页</a>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}充钱{% endblock %}
+
+{% block content%}
+<h1>在这里充钱</h1>
+    <form method="post" action="{% url 'shop:deposit' %}">
+    {% csrf_token %}
+        {% for temp in form %}
+    {{ temp.label }}{{ temp }}{{ temp.errors.0 }}
+    <input type="submit" value="充钱">
+        </form>
+    {% endfor %}
+{{ message }}<br>
+    当前余额:{{ fund }}
+<a href="{% url 'home' %}">返回主页</a>
+
+{% endblock %}

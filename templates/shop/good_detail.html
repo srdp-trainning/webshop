@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}商品{% endblock %}
+
+{% block content %}
+    <h1>{{ good.name }}</h1>{{ total_views }}views<br>
+    商家{{ good.owner.person.name }}<br>
+商品价格{{ good.price }}<br>
+    剩余{{ good.stock }}<br>
+{% autoescape off %}
+    详细信息{{ good.detail_information }}<br>
+{% endautoescape %}
+
+    {% block alter %}
+    商家地址{{ good.owner.address }}<br>
+    商家电话{{ good.owner.phone }}<br>
+
+{% include 'review.html' %}
+    {% if status %}
+        {% if not customer_yes %}
+        你是卖家<br>
+        <a href="{% url 'account:register' %}">注册一个买家</a>
+        {% else %}
+        <form action="{% url 'shop:good_detail' good.fake_id %}" method="post">
+            {% csrf_token %}
+                <a href="{% url 'shop:good_purchase' good.fake_id %}">
+                    <input type="button" value="马上购买"></a><br>
+                    {% if not in_cart %}
+                    <input type="submit" value="加入购物车" name="save_in"><br>
+                    {% else %}
+                    <p>已经在购物车里了!</p>
+                    {% endif %}
+        </form>
+        {% endif %}
+    {% else %}
+    你需要登录进行购买等操作<br>
+    <a href="{% url 'account:login' %}">马上登陆</a>
+
+    {% endif %}
+    {% endblock %}
+<a href="{% url 'home' %}">返回主页</a>
+    <a href="{% url 'shop:good_display' %}">返回商城</a>
+{% endblock %}

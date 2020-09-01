@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}商品不存在{% endblock %}
+
+{% block content %}
+
+    <p>没有你想找的商品</p>
+    <a href="{% url 'shop:good_display' %}">逛商城</a>
+    <a href="{% url 'home' %}">返回主页</a>
+
+{% endblock %}

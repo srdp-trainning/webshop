@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------<br>
+            <p>评论</p>
+                {% for review,replys in reviews.items %}
+            姓名:{{ review.writer.name }} 日期:{{ review.date|date:"F j,Y"  }}<br>
+                    内容:{{ review.body }} <a href="{% url 'shop:reply' good.fake_id review.id %}">回复</a><br>
+                    <p>回复:</p>
+                    {% for reply in replys %}
+                    姓名:{{ reply.writer.person.name }}日期:{{ reply.date }}<br>
+                    内容:{{ reply.body }}<br>
+                    {% endfor %}
+---------------------------------------------------------------------------<br>
+        {% endfor %}
+<form action="{% url 'shop:good_detail' good.fake_id%}" method="post">
+{% csrf_token %}
+    {% if form %}
+    {% for temp in form %}
+        <p>{{ temp.label }}{{ temp }}</p>
+    {% endfor %}
+    <input type="submit" value="评论" name="review"><br>
+{% endif %}
+</form>

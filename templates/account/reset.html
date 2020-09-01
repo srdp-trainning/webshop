@@ -1,0 +1,14 @@
+{% extends 'account.html'%}
+{% block title %}找回密码{% endblock %}
+
+{% block content %}
+<form action="{% url 'account:reset' %}" method="post">
+    {% csrf_token %}
+    {% for temp in form %}
+    {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+{% endfor %}
+    <label>验证码<input type="text" name="code" maxlength="15" required></label><br>
+    <img src="/code/" id="code_img"><br>
+<input type="submit" value="发送邮件"><br>
+</form>
+{% endblock %}

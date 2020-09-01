@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}修改个人信息{% endblock %}
+
+{% block content %}
+<form action="{% url 'usage:information_revise'%}" method="post"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for temp in form %}
+    <p>{{ temp.label }}{{ temp }}{{ temp.errors.0 }}</p>
+    {% endfor %}
+<input type="submit" value="提交修改">
+</form>
+    <a href="/">返回主页</a>
+{% endblock %}

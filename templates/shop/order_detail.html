@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block title %}订单详情{% endblock %}
+
+{% block content %}
+    订单编号:{{ order.code }}<br>
+    订单日期:{{ order.date|date:"F j,Y"}}<br>
+    客户:{{ order.receiver.person.name }}<br>
+    商品名称:{{ order.good.name }}<br>
+    个数:{{ order.number }}<br>
+{% if user.identity == 'c' %}
+    <a href="{% url 'shop:shopping_detail' %}">返回</a>
+{% else %}
+    <a href="{% url 'usage:my_order' %}">返回</a>
+    {% endif %}
+{% endblock %}

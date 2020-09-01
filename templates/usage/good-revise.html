@@ -1,0 +1,23 @@
+{% extends 'usage/new-good.html' %}
+{% block content %}
+<form action="{% url 'usage:revise' good.fake_id %}" method="post"
+      enctype="multipart/form-data">
+ {% csrf_token %}
+    {% if good.view %}
+    <p>主略览图<img src="{{ good.view.url }}" height="100" width="100"></p>
+    {% else %}
+        <p>你的商品还没主略览图的</p>
+    {% endif %}
+    {% for temp in form %}
+
+        {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+    {% endfor %}
+详细商品信息<br>
+    <textarea name='content'>{{ detail_information }}</textarea>
+<br>
+    <input type="submit" value="暂存" name="update">
+    <input type="submit" value="上架" name="on_sale">
+    <input type="submit" value="删除" name="delete">
+</form>
+<a href="/">返回主页</a>
+{% endblock %}

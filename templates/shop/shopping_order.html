@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}我的消费记录{% endblock %}
+
+{% block content %}
+<h1>我的消费记录</h1>
+    {% if not orders %}
+        <p>还没有消费过<a href="{% url 'shop:good_display' %}">逛商场</a> </p>
+    {% else %}
+    {% for order in orders %}
+    商品{{ order.good.name }}
+    <a href="{{ order.get_order_url }}">详情</a>
+    {% if order.status %}
+    <p>已经成功交易</p>
+    {% else %}
+    <p>商家还没有处理账单</p>
+        <a href="?code={{ order.code }}"><input type="button" value="取消"></a><br>
+    {% endif %}
+-----------------------------------------------------<br>
+    {% endfor %}
+    {% endif %}
+    {% include 'paginator.html' %}
+    <a href="{% url 'home' %}">返回主页</a>
+{% endblock %}

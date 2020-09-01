@@ -1,0 +1,11 @@
+{% extends 'shop/good_detail.html'%}
+{% block alter %}
+    {% csrf_token %}
+    {% if good.on_sale == False %}
+    商品未上架<br>
+    {% else %}
+    商品上架了<br>
+    {% endif %}
+    库存{{ good.stock }}<br>
+    <a href="{% url 'usage:revise' good.fake_id%}">修改</a>
+{% endblock %}

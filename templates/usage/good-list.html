@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h1>{{ name }}的店铺</h1>
+------------------------------------------------------------------<br>
+    {% for good in goods %}
+        <a href={{ good.good_absolute_url }}>{{ good.name }}</a><br>
+        <p>库存:{{ good.stock }}</p>
+        <p>价格:{{ good.price }}</p>
+        {% if good.on_sale == False %}
+        商品未上架
+        {% else %}
+        商品已经上架
+        {% endif %}<br>
+------------------------------------------------------------------<br>
+    {% endfor %}
+<a href="/">返回主页</a><br>
+<a href="{% url 'usage:new' %}">新商品</a><br>
+{% endblock %}

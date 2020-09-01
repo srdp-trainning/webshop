@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}主页{% endblock %}
+
+{% block content %}
+Welcome {{ username }}
+<a href="{% url 'shop:good_display' %}">浏览商城</a><br>
+ <p>火热商品</p>
+        {% for good in most_viewed %}
+        <a href="{{ good.get_absolute_url }}">{{ good.name }}</a><br>
+        {% endfor %}
+---------------------------------------------------<br>
+    {% if  status %}
+<form action="{% url 'home' %}" method="post">
+     {% csrf_token %}
+    <input type="submit" value="退出登录" name="logout"><br>
+
+    <a href="{% url 'usage:information_view' %}">个人信息</a><br>
+    <a href="{% url 'shop:password_change' %}">修改密码</a><br>
+
+    {% block self-function %}
+    <a href="{% url 'shop:cart' %}">我的购物车</a><br>
+    <a href="{% url 'shop:shopping_detail' %}">我的消费记录</a><br>
+    <a href="{% url 'shop:deposit' %}">充钱</a><br>
+        {% for temp in form %}
+        {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+    {% endfor %}
+    <input type="submit" value="搜索" name="searching">
+</form>
+{% endblock %}
+
+     {% else %}
+     <a href="{% url 'account:login' %}">登录</a><br>
+{% endif %}
+{% endblock %}

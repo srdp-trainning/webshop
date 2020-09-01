@@ -1,0 +1,16 @@
+{% extends 'account.html' %}
+
+{% block title %}注册用户{% endblock %}
+
+{% block content %}
+<form action="{% url 'account:register' %}" method="post">
+    {% csrf_token %}
+    {% for temp in form %}
+    {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+    {% endfor %}
+<label>验证码:</label>
+    <label><input type="text" maxlength="20" name="code" required /></label><br>
+    <img src="/code/"><br>
+    <input type="submit" value="注册" name="customer"><br>
+</form>
+{% endblock %}

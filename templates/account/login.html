@@ -1,0 +1,18 @@
+{% extends 'account.html' %}
+{% block title %}登录{% endblock %}
+
+{% block content %}
+<form action="{% url 'account:login' %}" method="post">
+    {% csrf_token %}
+    {% for temp in form %}
+    {{ temp.label }}{{ temp }}{{ temp.errors.0 }}<br>
+{% endfor %}
+    <label>验证码:</label>
+   <label><input type="text" maxlength="20" name="code" required /></label><br>
+    <img src="/code/" id="code_img" alt=""><br>{{ check }}
+<input type="submit" value="登录"><br>
+
+<a href="{% url 'account:register' %}">注册账号</a>
+<a href="{% url 'account:reset' %}">忘记密码</a>
+</form>
+{% endblock %}

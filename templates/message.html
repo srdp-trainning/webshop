@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}信息{% endblock %}
+
+{% block message %}
+    {{ message }}
+<a href="{% url 'home' %}">返回主页</a>
+    <a href="{% url 'shop:good_display' %}">返回商城</a>
+<a href="{{ good.get_absolute_url }}">返回商品页面</a>
+<a href="{% url 'shop:cart' %}">我的购物车</a>
+    {% if deposit %}
+<a href="{% url 'shop:deposit' %}">马上充钱</a>
+{% endif %}
+{% endblock %}
